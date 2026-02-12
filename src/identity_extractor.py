@@ -31,26 +31,45 @@ class IdentityExtractor:
         Returns:
             str: Extracted pattern identifier
         """
-        # TODO: Implement extraction algorithm
-        # Steps:
-        # 1. Extract binary data from image
-        # 2. Convert binary to string
-        # 3. Validate extracted data
-        pass
+        # Convert image to RGB if needed
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+        
+        # Convert to numpy array
+        img_array = np.array(image)
+        
+        # First extract the length (32 bits)
+        length_binary = self.extract_lsb(img_array, 32)
+        data_length = int(length_binary, 2)
+        
+        # Extract the actual data
+        binary_data = self.extract_lsb(img_array, data_length, offset=32)
+        
+        # Convert binary to string
+        extracted_data = self.binary_to_string(binary_data)
+        
+        return extracted_data
     
-    def extract_lsb(self, image_array, data_length):
+    def extract_lsb(self, image_array, data_length, offset=0):
         """
         Extract data using LSB method.
         
         Args:
             image_array: Numpy array of image
-            data_length: Expected length of embedded data
+            data_length: Expected length of embedded data in bits
+            offset: Bit offset to start extraction
             
         Returns:
             str: Binary string of extracted data
         """
-        # TODO: Implement LSB extraction
-        pass
+        flat_array = image_array.flatten()
+        
+        binary_data = ''
+        for i in range(offset, offset + data_length):
+            # Extract LSB
+            binary_data += str(flat_array[i] & 1)
+        
+        return binary_data
     
     def binary_to_string(self, binary_data):
         """
@@ -62,8 +81,14 @@ class IdentityExtractor:
         Returns:
             str: Decoded string
         """
-        # TODO: Convert binary to string
-        pass
+        # Split into 8-bit chunks
+        chars = []
+        for i in range(0, len(binary_data), 8):
+            byte = binary_data[i:i+8]
+            if len(byte) == 8:
+                chars.append(chr(int(byte, 2)))
+        
+        return ''.join(chars)
     
     def validate_extracted_data(self, data):
         """
@@ -75,8 +100,12 @@ class IdentityExtractor:
         Returns:
             bool: True if data is valid
         """
-        # TODO: Implement validation
-        pass
+        # Check if data is printable and not empty
+        if not data:
+            return False
+        
+        # Check if all characters are printable
+        return all(c.isprintable() or c.isspace() for c in data)
 
 
 if __name__ == "__main__":

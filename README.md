@@ -87,38 +87,41 @@ This project implements a novel approach to image identification that eliminates
 - **Resilient**: Survives standard image processing operations
 - **Self-Contained**: Images carry their own identity information
 
-## Installation
+## Quick Start
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd image-identity-framework
+git clone https://github.com/prathamguravvv/Product-Verification-Using-Unique-ID.git
+cd Product-Verification-Using-Unique-ID
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Run demo
+python demo.py
 ```
 
-## Quick Start
+The demo will generate images with embedded identities and verify them automatically!
+
+## Usage Example
 
 ```python
+from src.main import ImageIdentityFramework
+
+# Initialize framework
+framework = ImageIdentityFramework()
+
 # Generate an identifiable image
-from image_identity import generate_image, embed_identity
+image, pattern_id, hash_value = framework.generate_identifiable_image("output.png")
+print(f"Generated: {pattern_id}")
 
-# Create unique pattern identifier
-pattern_id = generate_pattern_id()
-
-# Generate image with embedded identity
-image = generate_image(pattern_id)
-
-# Verify image identity
-from image_identity import extract_identity, verify_identity
-
-# Extract embedded identifier
-extracted_id = extract_identity(image)
-
-# Verify authenticity
-is_valid = verify_identity(image, extracted_id)
+# Verify the image
+result = framework.verify_image("output.png")
+print(f"Valid: {result['is_valid']}")
+print(f"Extracted ID: {result['pattern_id']}")
 ```
+
+See [SETUP.md](SETUP.md) for detailed usage instructions.
 
 ## Requirements
 

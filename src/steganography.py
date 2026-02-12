@@ -32,12 +32,31 @@ class SteganographyEncoder:
         Returns:
             PIL.Image: Image with embedded identity
         """
-        # TODO: Implement LSB or DCT-based embedding
-        # Steps:
-        # 1. Convert pattern_id to binary
-        # 2. Embed bits into image pixels
-        # 3. Preserve visual quality
-        pass
+        # Convert image to RGB if needed
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+        
+        # Convert pattern_id to binary
+        binary_data = self.encode_to_binary(pattern_id)
+        
+        # Add length header (32 bits for data length)
+        data_length = len(binary_data)
+        length_binary = format(data_length, '032b')
+        full_binary = length_binary + binary_data
+        
+        # Check capacity
+        capacity = self.calculate_capacity(image)
+        if len(full_binary) > capacity:
+            raise ValueError(f"Data too large. Need {len(full_binary)} bits, have {capacity} bits")
+        
+        # Convert to numpy array
+        img_array = np.array(image)
+        
+        # Embed using LSB
+        embedded_array = self.embed_lsb(img_array, full_binary)
+        
+        # Convert back to PIL Image
+        return Image.fromarray(embedded_array.astype('uint8'), 'RGB')
     
     def encode_to_binary(self, data):
         """
@@ -49,8 +68,8 @@ class SteganographyEncoder:
         Returns:
             str: Binary string
         """
-        # TODO: Convert string to binary
-        pass
+        binary = ''.join(format(ord(char), '08b') for char in data)
+        return binary
     
     def embed_lsb(self, image_array, binary_data):
         """
@@ -63,8 +82,15 @@ class SteganographyEncoder:
         Returns:
             numpy.ndarray: Modified image array
         """
-        # TODO: Implement LSB embedding
-        pass
+        flat_array = image_array.flatten()
+        
+        # Embed each bit
+        for i, bit in enumerate(binary_data):
+            # Modify LSB of pixel value
+            flat_array[i] = (flat_array[i] & 0xFE) | int(bit)
+        
+        # Reshape back to original shape
+        return flat_array.reshape(image_array.shape)
     
     def calculate_capacity(self, image):
         """
@@ -76,8 +102,9 @@ class SteganographyEncoder:
         Returns:
             int: Maximum bits that can be embedded
         """
-        # TODO: Calculate capacity based on image size
-        pass
+        width, height = image.size
+        # RGB image has 3 channels, we can use 1 bit per channel
+        return width * height * 3
 
 
 if __name__ == "__main__":
