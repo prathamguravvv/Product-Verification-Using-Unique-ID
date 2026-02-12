@@ -163,9 +163,20 @@ If you use this framework in your research, please cite:
 [Citation information to be added]
 ```
 
+## Team
+
+This project is developed and maintained by:
+
+- **Sohan** - Pattern Generation & Image Generation
+- **Pratham** - Steganography & Identity Extraction  
+- **Vighnesh** - Cryptographic Verification & Security
+- **Ronit** - API, CLI & Integration
+
+See [PROJECT_TASKS.md](PROJECT_TASKS.md) for detailed task assignments and [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
 ## Contact
 
-[Contact information]
+For questions or collaboration opportunities, please open an issue on GitHub or reach out to the team.
 
 ## Acknowledgments
 
