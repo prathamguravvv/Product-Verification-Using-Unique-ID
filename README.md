@@ -100,11 +100,30 @@ pip install -r requirements.txt
 # Run quick test
 python run.py
 
+# Generate animal-themed images
+python demo_animals.py
+
 # Or run full demo
 python demo.py
 ```
 
 The demo will generate images with embedded identities and verify them automatically!
+
+## Image Styles
+
+The framework supports different image generation styles:
+
+- **Animal Style** (default): Generates unique animal-themed images
+- **Abstract Style**: Generates abstract patterns
+- **Geometric Style**: Generates geometric designs
+
+```python
+# Use animal style (default)
+framework = ImageIdentityFramework(image_style="animal")
+
+# Use abstract style
+framework = ImageIdentityFramework(image_style="abstract")
+```
 
 ## Usage Example
 

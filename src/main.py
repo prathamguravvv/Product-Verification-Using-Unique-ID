@@ -26,10 +26,15 @@ except ImportError:
 class ImageIdentityFramework:
     """Main framework integrating all modules."""
     
-    def __init__(self):
-        """Initialize all components."""
+    def __init__(self, image_style="animal"):
+        """
+        Initialize all components.
+        
+        Args:
+            image_style: Style for image generation ("animal", "abstract", "geometric")
+        """
         self.pattern_gen = PatternGenerator()
-        self.image_gen = ImageGenerator()
+        self.image_gen = ImageGenerator(style=image_style)
         self.encoder = SteganographyEncoder()
         self.extractor = IdentityExtractor()
         self.verifier = CryptoVerifier()
