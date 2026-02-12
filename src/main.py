@@ -6,12 +6,21 @@ Integrates all modules into a unified pipeline.
 """
 
 from pathlib import Path
-from .pattern_generator import PatternGenerator
-from .image_generator import ImageGenerator
-from .steganography import SteganographyEncoder
-from .identity_extractor import IdentityExtractor
-from .crypto_verifier import CryptoVerifier
 from PIL import Image
+
+# Handle both relative and absolute imports
+try:
+    from .pattern_generator import PatternGenerator
+    from .image_generator import ImageGenerator
+    from .steganography import SteganographyEncoder
+    from .identity_extractor import IdentityExtractor
+    from .crypto_verifier import CryptoVerifier
+except ImportError:
+    from pattern_generator import PatternGenerator
+    from image_generator import ImageGenerator
+    from steganography import SteganographyEncoder
+    from identity_extractor import IdentityExtractor
+    from crypto_verifier import CryptoVerifier
 
 
 class ImageIdentityFramework:

@@ -97,7 +97,10 @@ cd Product-Verification-Using-Unique-ID
 # Install dependencies
 pip install -r requirements.txt
 
-# Run demo
+# Run quick test
+python run.py
+
+# Or run full demo
 python demo.py
 ```
 
@@ -119,6 +122,22 @@ print(f"Generated: {pattern_id}")
 result = framework.verify_image("output.png")
 print(f"Valid: {result['is_valid']}")
 print(f"Extracted ID: {result['pattern_id']}")
+```
+
+## Running Individual Modules
+
+```bash
+# Test pattern generator
+python src/pattern_generator.py
+
+# Test image generator  
+python src/image_generator.py
+
+# Test steganography
+python src/steganography.py
+
+# Test complete pipeline
+python src/main.py
 ```
 
 See [SETUP.md](SETUP.md) for detailed usage instructions.
