@@ -36,14 +36,22 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Generated Images
+# Generated Images and Output
 output/
 generated_images/
+demo_output/
+sample_images/
+test_output/
+quick_test_output/
 *.png
 *.jpg
 *.jpeg
 !examples/*.png
 !examples/*.jpg
+
+# Datasets
+open-images/
+datasets/
 
 # Logs
 *.log
